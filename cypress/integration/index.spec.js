@@ -7,6 +7,14 @@ const login = () =>{
     cy.get("#login-button").click();
 } 
 
+const addProducstoToCart = () => {
+    cy.get(".inventory_item button").eq(0).click();
+    cy.get(".inventory_item button").eq(1).click();
+    cy.get(".inventory_item button").eq(2).click();
+
+    cy.get(".fa-layers-counter.shopping_cart_badge").should("have.text", "3");
+}
+
 describe("SUIT TEST", () => {
     beforeEach(() => {
         cy.visit(URL)
@@ -24,13 +32,8 @@ describe("SUIT TEST", () => {
         cy.get(".product_sort_container").select("az");
     });
 
-    it.skip("should add products to the cart", () => {
-      
-        cy.get(".inventory_item button").eq(0).click();
-        cy.get(".fa-layers-counter.shopping_cart_badge").should("have.text", "1");
-        cy.get(".inventory_item button").eq(1).click();
-        cy.get(".fa-layers-counter.shopping_cart_badge").should("have.text", "2");
-        cy.get(".inventory_item button").eq(2).click();
+    it("should add products to the cart", () => {
+        addProducstoToCart();
         cy.get(".fa-layers-counter.shopping_cart_badge").should("have.text", "3");
     });
 
@@ -42,12 +45,8 @@ describe("SUIT TEST", () => {
         cy.get(".fa-layers-counter.shopping_cart_badge").should("have.length", "0");
     });
 
-    it("shoud remove products to the cart part in other view", () => {
-        cy.get(".inventory_item button").eq(0).click();
-        cy.get(".fa-layers-counter.shopping_cart_badge").should("have.text", "1");
-        cy.get(".inventory_item button").eq(1).click();
-        cy.get(".fa-layers-counter.shopping_cart_badge").should("have.text", "2");
-        cy.get(".inventory_item button").eq(2).click();
+    it.skip("shoud remove products to the cart part in other view", () => {
+        addProducstoToCart();
         cy.get(".fa-layers-counter.shopping_cart_badge").should("have.text", "3");
         cy.get(".svg-inline--fa").click();
         cy.get(".item_pricebar > .btn_secondary").eq(0).click();
